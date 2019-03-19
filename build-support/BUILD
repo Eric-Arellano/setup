@@ -2,6 +2,7 @@
 # Licensed under the Apache License, Version 2.0 (see LICENSE).
 
 python_library(
-  name='build_support',
+  name = 'build_support',
   sources = globs('*.py'),
+  compatibility = 'CPython>=3.6',
 )
