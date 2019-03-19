@@ -28,14 +28,12 @@ def create_parser() -> argparse.ArgumentParser:
 def run_isort(*, fix: bool) -> None:
   command = ["./pants", "--changed-parent=gh-pages", "fmt.isort"]
   if fix:
-    subprocess.run(command, check=True, stdout=subprocess.DEVNULL)
+    subprocess.run(command, stdout=subprocess.DEVNULL, check=True)
     return
   command.extend(["--", "--check-only"])
   result = subprocess.run(command, encoding="utf-8", stdout=subprocess.PIPE)
-  stdout = result.stdout.strip()
-  try:
-    result.check_returncode()
-  except subprocess.CalledProcessError:
+  if result.returncode != 0:
+    stdout = result.stdout.strip()
     failing_targets = '\n'.join(parse_failing_targets(stdout))
     die("The following files have incorrect import orders. Fix by running "
         f"`./build-support/isort.py -f`.\n\n{failing_targets}")
