@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # Copyright 2019 Pants project contributors (see CONTRIBUTORS.md).
 # Licensed under the Apache License, Version 2.0 (see LICENSE).
 
@@ -58,7 +57,3 @@ class TestFirstTimeInstall(unittest.TestCase):
       ).stderr
       # Check that stderr is falsy, i.e. there is no output.
       self.assertFalse(second_run_pants_script_logging)
-
-if __name__ == "__main__":
-  with travis_section("PantsFirstTimeInstall", "Testing first time install."):
-    unittest.main()

@@ -34,7 +34,7 @@ test_1_16_without_py37: &test_1_16_without_py37 >
   --python-versions unspecified 2.7 3.6
 
 test_first_time_install: &test_first_time_install >
-  ./build-support/test_first_time_install.py
+  ./pants --quiet test build-support:first_time_install
 
 script:
   - *test_1_14
@@ -78,7 +78,7 @@ linux_setup: &linux_setup
 
 matrix:
   include:
-    - name: "Lint ./pants script"
+    - name: "Lint ./pants script and build-support"
       <<: *linux_setup
       dist: xenial
       before_install:
@@ -88,7 +88,9 @@ matrix:
           packages:
             - shellcheck
       script:
-        - ./build-support/shellcheck.py
+        - ./pants --quiet run build-support:shellcheck
+        - ./pants fmt.isort build-support:: -- --check-only
+        - ./pants lint build-support::
 
     - name: "OSX 10.11 - El Capitan"
       <<: *osx_setup
