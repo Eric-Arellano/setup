@@ -34,7 +34,7 @@ test_1_16_without_py37: &test_1_16_without_py37 >
   --python-versions unspecified 2.7 3.6
 
 test_first_time_install: &test_first_time_install >
-  ./pants --quiet test build-support:first_time_install
+  ./pants test tests:first_time_install
 
 script:
   - *test_1_14

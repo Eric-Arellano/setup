@@ -21,11 +21,3 @@ python_binary(
     ':common',
   ],
 )
-
-python_tests(
-  name='first_time_install',
-  sources='test_first_time_install.py',
-  dependencies=[
-    ':common',
-  ],
-)
