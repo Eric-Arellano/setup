@@ -10,12 +10,12 @@ https://github.com/pantsbuild/pants/blob/master/tests/python/pants_test/core_tas
 
 import re
 import subprocess
-import unittest
+from unittest import TestCase
 
-from common import setup_pants_in_tmpdir, travis_section
+from common import setup_pants_in_tmpdir
 
 
-class TestFirstTimeInstall(unittest.TestCase):
+class TestFirstTimeInstall(TestCase):
 
   def test_venv_name_uses_most_recent_stable_release(self) -> None:
     with setup_pants_in_tmpdir() as tmpdir:
