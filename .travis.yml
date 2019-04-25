@@ -89,8 +89,9 @@ matrix:
             - shellcheck
       script:
         - ./pants --quiet run build-support:shellcheck
-        - ./pants fmt.isort build-support:: -- --check-only
-        - ./pants lint build-support::
+        - ./pants fmt.isort :: -- --check-only
+        - ./pants lint ::
+        - ./pants mypy ::
 
     - name: "OSX 10.11 - El Capitan"
       <<: *osx_setup

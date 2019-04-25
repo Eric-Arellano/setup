@@ -94,7 +94,8 @@ def set_pants_cache_to_tmpdir():
     try:
       yield
     finally:
-      os.environ = original_env
+      os.environ.clear()
+      os.environ.update(original_env)
 
 
 @contextmanager
