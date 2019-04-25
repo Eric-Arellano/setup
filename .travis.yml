@@ -88,7 +88,10 @@ matrix:
           packages:
             - shellcheck
       script:
-        - ./pants --quiet run build-support:shellcheck
+        # NB: we invoke the shellcheck script directly, rather than through Pants,
+        # as it is meant to check the validity of the ./pants script so should not
+        # depend on that script working properly.
+        - ./build-support/shellcheck.py
         - ./pants fmt.isort :: -- --check-only
         - ./pants lint ::
         - ./pants mypy ::
