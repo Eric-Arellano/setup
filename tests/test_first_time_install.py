@@ -10,15 +10,14 @@ https://github.com/pantsbuild/pants/blob/master/tests/python/pants_test/core_tas
 
 import re
 import subprocess
-from unittest import TestCase
 
-from common import setup_pants_in_tmpdir
+from test_base import TestBase
 
 
-class TestFirstTimeInstall(TestCase):
+class TestFirstTimeInstall(TestBase):
 
   def test_venv_name_uses_most_recent_stable_release(self) -> None:
-    with setup_pants_in_tmpdir() as tmpdir:
+    with self.setup_pants_in_tmpdir() as tmpdir:
       completed_process = subprocess.run(
         ["./pants", "--version"],
         check=True,
@@ -36,7 +35,7 @@ class TestFirstTimeInstall(TestCase):
       ))
 
   def test_only_bootstraps_the_first_time(self) -> None:
-    with setup_pants_in_tmpdir() as tmpdir:
+    with self.setup_pants_in_tmpdir() as tmpdir:
       first_run_pants_script_logging = subprocess.run(
         ["./pants", "--version"],
         check=True,
