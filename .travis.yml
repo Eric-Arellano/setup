@@ -94,7 +94,7 @@ matrix:
         - ./build-support/shellcheck.py
         - ./pants fmt.isort :: -- --check-only
         - ./pants lint ::
-        - ./pants mypy ::
+        - ./build-support/mypy.py
 
     - name: "OSX 10.11 - El Capitan"
       <<: *osx_setup
