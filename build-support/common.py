@@ -11,7 +11,7 @@ import time
 from contextlib import contextmanager
 from enum import Enum
 from pathlib import Path
-from typing import Tuple
+from typing import Iterator, Tuple
 
 # --------------------------------------------------------
 # Logging utils
@@ -46,7 +46,7 @@ def elapsed_time() -> Tuple[int, int]:
 
 
 @contextmanager
-def travis_section(slug: str, message: str):
+def travis_section(slug: str, message: str) -> Iterator[None]:
   travis_fold_state = "/tmp/.travis_fold_current"
 
   def travis_fold(action: str, target: str) -> None:
@@ -77,7 +77,7 @@ def travis_section(slug: str, message: str):
 # --------------------------------------------------------
 
 @contextmanager
-def copy_pants_into_tmpdir():
+def copy_pants_into_tmpdir() -> Iterator[str]:
   with tempfile.TemporaryDirectory() as tmpdir:
     # NB: Unlike the install guide's instruction to curl the `./pants` script, we directly
     # copy it to ensure we are using the branch's version of the script and to avoid
@@ -87,7 +87,7 @@ def copy_pants_into_tmpdir():
 
 
 @contextmanager
-def set_pants_cache_to_tmpdir():
+def set_pants_cache_to_tmpdir() -> Iterator[None]:
   with tempfile.TemporaryDirectory() as tmpdir:
     original_env = os.environ.copy()
     os.environ["PANTS_HOME"] = tmpdir
@@ -99,7 +99,7 @@ def set_pants_cache_to_tmpdir():
 
 
 @contextmanager
-def setup_pants_in_tmpdir():
+def setup_pants_in_tmpdir() -> Iterator[str]:
   with set_pants_cache_to_tmpdir(), copy_pants_into_tmpdir() as buildroot_tmpdir:
     yield buildroot_tmpdir
 
@@ -123,7 +123,7 @@ def write_config(config: configparser.ConfigParser) -> None:
 
 
 @contextmanager
-def temporarily_rewrite_config(updated_config: configparser.ConfigParser):
+def temporarily_rewrite_config(updated_config: configparser.ConfigParser) -> Iterator[None]:
   with open(PANTS_INI, "r") as f:
     original_config = f.read()
   write_config(updated_config)
